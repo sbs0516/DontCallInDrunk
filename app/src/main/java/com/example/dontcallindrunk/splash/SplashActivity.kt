@@ -23,6 +23,7 @@ class SplashActivity : AppCompatActivity() {
         splashViewModel.delay().observe(this, Observer {
             if(it) {
                 goMainActivity()
+                splashViewModel.check.value = false
             }
         })
 

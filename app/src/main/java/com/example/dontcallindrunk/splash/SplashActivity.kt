@@ -11,26 +11,40 @@ import com.example.dontcallindrunk.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
 
-    lateinit var splashViewDataBinding: ActivitySplashBinding
+    private val splashViewDatabinding by lazy {
+        DataBindingUtil.setContentView<ActivitySplashBinding>(this, R.layout.activity_splash).apply {
+            lifecycleOwner = this@SplashActivity
+        }
+    }
+    private val splashViewModel by lazy {
+        ViewModelProviders.of(this@SplashActivity).get(SplashViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        splashViewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
 
-        val splashViewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
-        splashViewDataBinding.lifecycleOwner = this
+        splashViewDatabinding.delayBtn.performClick()
 
-        splashViewModel.delay().observe(this, Observer {
-            if(it) {
+        splashViewModel.setListener(object: OnDelayListener {
+            override fun onDelay() {
                 goMainActivity()
-                splashViewModel.check.value = false
             }
         })
-
     }
-    private fun goMainActivity() {
-        val myIntent = Intent(this, MainActivity::class.java)
-        startActivity(myIntent)
+
+    override fun onResume() {
+        super.onResume()
+        splashViewModel.onActivityResume()
+    }
+
+    fun goMainActivity() {
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
+
+}
+
+interface OnDelayListener {
+    fun onDelay ()
+
 }

@@ -1,22 +1,27 @@
 package com.example.dontcallindrunk.splash
 
 import android.os.Handler
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.os.Looper
 import androidx.lifecycle.ViewModel
 
 class SplashViewModel: ViewModel() {
 
-    var check = MutableLiveData<Boolean>()
+    private var splashListener: OnDelayListener? = null
 
-    fun delay(): LiveData<Boolean> {
+    fun setListener(listener: OnDelayListener) {
+        this.splashListener = listener
+    }
 
-        val handler = Handler()
-        handler.postDelayed( {
-            check.value = true
+    fun onActivityResume() {
+//        val myHandler = Handler()
+//        myHandler.postDelayed({
+//            splashListener?.onDelay()
+//        }, 3000)
+
+        val myHandler = Handler(Looper.getMainLooper())
+        myHandler.postDelayed({
+            splashListener?.onDelay()
         }, 3000)
-
-        return check
     }
 
 }

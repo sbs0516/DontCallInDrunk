@@ -18,17 +18,15 @@ class SplashActivity : AppCompatActivity() {
             lifecycleOwner = this@SplashActivity
         }
     }
-    private val splashViewModel by lazy {
-        ViewModelProviders.of(this@SplashActivity).get(SplashViewModel::class.java)
-    }
+    private val splashViewModel by lazy { ViewModelProviders.of(this@SplashActivity).get(SplashViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        splashViewDatabinding.delayBtn.performClick()
+        splashViewDatabinding.delayBtn
 
-        splashViewModel.setListener(object: OnDelayListener {
-            override fun onDelay() {
+        splashViewModel.setOnDelayListener(object: OnDelayCompleteListener {
+            override fun onDelayComplete() {
                 goMainActivity()
             }
         })
@@ -46,7 +44,6 @@ class SplashActivity : AppCompatActivity() {
 
 }
 
-interface OnDelayListener {
-    fun onDelay ()
-
+interface OnDelayCompleteListener {
+    fun onDelayComplete ()
 }

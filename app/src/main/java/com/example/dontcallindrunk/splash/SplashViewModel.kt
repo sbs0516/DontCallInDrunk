@@ -6,18 +6,18 @@ import androidx.lifecycle.ViewModel
 
 class SplashViewModel: ViewModel() {
 
-    private var splashListener: OnDelayListener? = null
+    private var splashListener: OnDelayCompleteListener? = null
 
     private val myHandler = Handler(Looper.getMainLooper())
 
-    fun setListener(listener: OnDelayListener) {
+    fun setOnDelayListener(listener: OnDelayCompleteListener) {
         this.splashListener = listener
     }
 
     fun onActivityResume() {
 
         myHandler.postDelayed({
-            splashListener?.onDelay()
+            splashListener?.onDelayComplete()
         }, 3000)
     }
 

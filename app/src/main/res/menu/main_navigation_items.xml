@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/list_item"
+        android:title="목록"
+        android:enabled="true"
+        android:icon="@drawable/list_icon" />
+
+    <item
+        android:id="@+id/record_item"
+        android:title="기록"
+        android:enabled="true"
+        android:icon="@drawable/record_icon" />
+
+    <item
+        android:id="@+id/setting_item"
+        android:title="설정"
+        android:enabled="true"
+        android:icon="@drawable/setting_icon" />
+
+
+</menu>

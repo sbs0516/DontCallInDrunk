@@ -6,13 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import com.example.dontcallindrunk.MainActivity
 import com.example.dontcallindrunk.R
+import com.example.dontcallindrunk.`interface`.OnClickAddListListener
+import com.example.dontcallindrunk.addlist.AddListFragment
 import com.example.dontcallindrunk.databinding.FragmentListBinding
 
 class ListFragment: Fragment() {
 
 //    private val listFragmentBinding by lazy { DataBindingUtil.inflate<FragmentListBinding>(layoutInflater, R.layout.fragment_list,false) }
     lateinit var listFragmentBinding: FragmentListBinding
+
+    private val listFragmentViewModel by lazy { ViewModelProviders.of(this).get(ListFragmentViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,10 +32,17 @@ class ListFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        listFragmentBinding.listFragmentViewModel = listFragmentViewModel
+
+        listFragmentViewModel.setOnClickAddListListener(object : OnClickAddListListener {
+            override fun onClickAddList() {
+                goAddListFragment()
+            }
+        })
     }
 
-    override fun onResume() {
-        super.onResume()
-
+    fun goAddListFragment() {
+        (activity as MainActivity).replaceFragment(AddListFragment())
     }
+
 }

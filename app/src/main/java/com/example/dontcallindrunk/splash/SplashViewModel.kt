@@ -3,6 +3,7 @@ package com.example.dontcallindrunk.splash
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.ViewModel
+import com.example.dontcallindrunk.`interface`.OnDelayCompleteListener
 
 class SplashViewModel: ViewModel() {
 
@@ -18,7 +19,7 @@ class SplashViewModel: ViewModel() {
 
         myHandler.postDelayed({
             splashListener?.onDelayComplete()
-        }, 3000)
+        }, 2300)
     }
 
 }

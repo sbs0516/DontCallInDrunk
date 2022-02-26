@@ -5,7 +5,11 @@
       <map>
         <entry key="..\:/Users/tumtu/AndroidStudioProjects/DontCallInDrunk_dev/app/src/main/res/layout/activity_main.xml" value="0.286231884057971" />
         <entry key="..\:/Users/tumtu/AndroidStudioProjects/DontCallInDrunk_dev/app/src/main/res/layout/activity_splash.xml" value="0.286231884057971" />
+        <entry key="..\:/Users/tumtu/AndroidStudioProjects/DontCallInDrunk_dev/app/src/main/res/layout/fragment_add_list.xml" value="0.17477203647416414" />
         <entry key="..\:/Users/tumtu/AndroidStudioProjects/DontCallInDrunk_dev/app/src/main/res/layout/fragment_list.xml" value="0.286231884057971" />
+        <entry key="..\:/Users/tumtu/AndroidStudioProjects/DontCallInDrunk_dev/app/src/main/res/layout/fragment_record.xml" value="0.286231884057971" />
+        <entry key="..\:/Users/tumtu/AndroidStudioProjects/DontCallInDrunk_dev/app/src/main/res/layout/fragment_setting.xml" value="0.286231884057971" />
+        <entry key="..\:/Users/tumtu/AndroidStudioProjects/DontCallInDrunk_dev/app/src/main/res/layout/recycler_list_item.xml" value="0.286231884057971" />
         <entry key="..\:/Users/tumtu/AndroidStudioProjects/DontCallInDrunk_dev/app/src/main/res/menu/main_navigation_items.xml" value="0.359375" />
       </map>
     </option>

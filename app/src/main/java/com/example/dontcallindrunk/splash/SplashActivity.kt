@@ -3,11 +3,10 @@ package com.example.dontcallindrunk.splash
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import com.example.dontcallindrunk.MainActivity
+import com.example.dontcallindrunk.`interface`.OnDelayCompleteListener
 import com.example.dontcallindrunk.R
 import com.example.dontcallindrunk.databinding.ActivitySplashBinding
 
@@ -42,8 +41,4 @@ class SplashActivity : AppCompatActivity() {
         finish()
     }
 
-}
-
-interface OnDelayCompleteListener {
-    fun onDelayComplete ()
 }

@@ -14,7 +14,7 @@ class SettingFragment: Fragment() {
 
     lateinit var settingFragmentBinding: FragmentSettingBinding
 
-    private val settingFragmentViewModel = ViewModelProviders.of(this).get(SettingFragmentViewModel::class.java)
+    private val settingFragmentViewModel by lazy { ViewModelProviders.of(this).get(SettingFragmentViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

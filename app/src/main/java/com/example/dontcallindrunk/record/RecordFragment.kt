@@ -9,14 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.dontcallindrunk.R
 import com.example.dontcallindrunk.databinding.FragmentRecordBinding
-import com.example.dontcallindrunk.setting.SettingFragmentViewModel
 
 class RecordFragment: Fragment() {
 
     lateinit var recordFragmentBinding: FragmentRecordBinding
 
-    private val recordFragmentViewModel = ViewModelProviders.of(this).get(RecordFragmentViewModel::class.java)
-
+    private val recordFragmentViewModel by lazy { ViewModelProviders.of(this).get(RecordFragmentViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

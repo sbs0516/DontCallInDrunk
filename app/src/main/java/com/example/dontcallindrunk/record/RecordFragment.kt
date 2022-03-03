@@ -23,6 +23,8 @@ class RecordFragment: Fragment() {
     ): View? {
         recordFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_record, container, false)
         return recordFragmentBinding.root
+
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

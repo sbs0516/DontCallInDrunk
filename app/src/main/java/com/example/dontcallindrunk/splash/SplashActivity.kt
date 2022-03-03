@@ -22,7 +22,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        splashViewDatabinding.delayBtn
+        splashViewDatabinding.splashViewModel = splashViewModel
 
         splashViewModel.setOnDelayListener(object: OnDelayCompleteListener {
             override fun onDelayComplete() {

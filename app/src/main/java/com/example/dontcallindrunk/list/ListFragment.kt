@@ -42,7 +42,7 @@ class ListFragment: Fragment() {
     }
 
     fun goAddListFragment() {
-        (activity as MainActivity).replaceFragment(AddListFragment())
+//        (activity as MainActivity).replaceFragment(AddListFragment())
     }
 
 }

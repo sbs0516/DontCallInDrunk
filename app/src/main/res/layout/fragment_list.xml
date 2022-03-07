@@ -6,6 +6,9 @@
         <variable
             name="listFragmentViewModel"
             type="com.example.dontcallindrunk.list.ListFragmentViewModel" />
+<!--        <variable-->
+<!--            name="fragmentManager"-->
+<!--            type="androidx.fragment.app.FragmentManager" />-->
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +32,7 @@
             android:layout_gravity="right|bottom"
             android:layout_marginRight="27dp"
             android:layout_marginBottom="27dp"
-            android:onClick="@{()->listFragmentViewModel.onClickAddList()}"
+            android:onClick="@{()->listFragmentViewModel.onClickAddListButton()}"
             android:src="@drawable/color_plus_icon" />
 
     </FrameLayout>

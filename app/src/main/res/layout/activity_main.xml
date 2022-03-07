@@ -6,6 +6,9 @@
         <variable
             name="viewModel"
             type="com.example.dontcallindrunk.MainViewModel" />
+        <variable
+            name="fragmentManager"
+            type="androidx.fragment.app.FragmentManager" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,60 +17,15 @@
     tools:context=".MainActivity">
 
     <FrameLayout
-        android:id="@+id/listFrameLayout"
+        android:id="@+id/mainFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:frameLayoutVisibility="@{viewModel.onStateChanged(viewModel.viewState)}"
+        app:fragmentManager="@{fragmentManager}"
+        app:viewState="@{viewModel.viewState}"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <fragment
-            android:id="@+id/listFragment"
-            android:name="com.example.dontcallindrunk.list.ListFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/recordFrameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:frameLayoutVisibility="@{viewModel.onStateChanged(viewModel.viewState)}"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <fragment
-            android:id="@+id/recordFragment"
-            android:name="com.example.dontcallindrunk.record.RecordFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/settingFrameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:frameLayoutVisibility="@{viewModel.onStateChanged(viewModel.viewState)}"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <fragment
-            android:id="@+id/settingFragment"
-            android:name="com.example.dontcallindrunk.setting.SettingFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
-
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"

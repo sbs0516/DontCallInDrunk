@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import com.example.dontcallindrunk.MainActivity
 import com.example.dontcallindrunk.R
@@ -42,7 +44,8 @@ class ListFragment: Fragment() {
     }
 
     fun goAddListFragment() {
-//        (activity as MainActivity).replaceFragment(AddListFragment())
+        val fragmentManager = (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
+        fragmentManager.replace(R.id.mainFrameLayout, AddListFragment()).addToBackStack("AddListFragment").commit()
     }
 
 }

@@ -21,11 +21,8 @@ class MainActivity : AppCompatActivity() {
 
         mainActivityBinding.viewModel = viewModel
 
+        mainActivityBinding.fragmentManager = supportFragmentManager
+
     }
 
-//    fun replaceFragment(fragment: Fragment) {
-//        val fragmentTransAction = supportFragmentManager.beginTransaction()
-//        fragmentTransAction.replace(R.id.mainFrameLayout, fragment)
-//        fragmentTransAction.commit()
-//    }
 }

@@ -3,16 +3,21 @@ package com.example.dontcallindrunk
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.Bindable
 import androidx.databinding.BindingAdapter
+import androidx.databinding.ObservableInt
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModel
+import com.example.dontcallindrunk.list.ListFragment
+import com.example.dontcallindrunk.record.RecordFragment
+import com.example.dontcallindrunk.setting.SettingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.lang.IllegalArgumentException
 
 interface OnMenuClickListener {
     fun onMenuClicked(itemId: Int)
-}
-
-interface OnSetFrameLayoutListener {
-    fun onFrameLayoutChanged()
 }
 
 @BindingAdapter("itemSelectedListener")
@@ -23,13 +28,19 @@ fun setOnItemSelectedListener(view: BottomNavigationView, listener: OnMenuClickL
     }
 }
 
-@BindingAdapter("android:frameLayoutVisibility")
-fun setFrameLayoutVisibility(view: FrameLayout, visible: Boolean) {
-    view.visibility = if(visible) {
-        View.VISIBLE
-    } else {
-        View.GONE
-    }
+@BindingAdapter(value = ["fragmentManager", "viewState"])
+fun setOnFragmentListener(view: FrameLayout, fragmentManager: FragmentManager, state: Int) {
+//    (view.context as? AppCompatActivity)?.supportFragmentManager
+
+    val fragmentTransAction = fragmentManager.beginTransaction()
+    fragmentTransAction.replace(view.id, when(state) {
+        MainViewModel.VIEWSTATE_LIST -> ListFragment()
+        MainViewModel.VIEWSTATE_RECORD -> RecordFragment()
+        MainViewModel.VIEWSTATE_SETTING -> SettingFragment()
+        else -> ListFragment()
+    })
+    fragmentTransAction.commit()
+
 }
 
 class MainViewModel: ViewModel() {
@@ -42,56 +53,27 @@ class MainViewModel: ViewModel() {
 
     }
 
-    var viewState : Int = VIEWSTATE_DEFAULT
-        set(value) {
-            if(field != value) {
-                field = value
+    var viewState = ObservableInt(VIEWSTATE_DEFAULT)
 
-            }
-        }
-
-    fun onStateChanged(viewState: Int): Boolean {
+    fun onStateChanged(viewState: Int) {
         when(viewState) {
             VIEWSTATE_DEFAULT -> {
-                Log.d("디폴트","Default")
-                return onVisibleListFrameLayout()
             }
             VIEWSTATE_LIST -> {
-                Log.d("리스트","List")
-                return onVisibleListFrameLayout()
             }
             VIEWSTATE_RECORD -> {
-                Log.d("레코드","Record")
-                return onVisibleRecordFrameLayout()
             }
             VIEWSTATE_SETTING -> {
-                Log.d("세팅","Setting")
-                return onVisibleSettingFrameLayout()
             }
         }
-        return false
     }
 
     fun onNavigationItemSelected(itemId: Int) {
         when(itemId) {
-            R.id.list_item -> viewState = VIEWSTATE_LIST
-            R.id.record_item -> viewState = VIEWSTATE_RECORD
-            R.id.setting_item -> viewState = VIEWSTATE_SETTING
+            R.id.list_item -> viewState.set(VIEWSTATE_LIST)
+            R.id.record_item -> viewState.set(VIEWSTATE_RECORD)
+            R.id.setting_item -> viewState.set(VIEWSTATE_SETTING)
         }
-        onStateChanged(viewState)
-    }
-
-    fun onVisibleListFrameLayout(): Boolean {
-        Log.d("리스트프레임", "ListFrame")
-        return viewState == VIEWSTATE_LIST || viewState == VIEWSTATE_DEFAULT
-    }
-    fun onVisibleRecordFrameLayout(): Boolean {
-        Log.d("레코드프레임", "RecordFrame")
-        return viewState == VIEWSTATE_RECORD
-    }
-    fun onVisibleSettingFrameLayout(): Boolean {
-        Log.d("세팅프레임", "SettingFrame")
-        return viewState == VIEWSTATE_SETTING
     }
 
 }

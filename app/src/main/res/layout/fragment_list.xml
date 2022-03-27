@@ -4,7 +4,7 @@
 
     <data>
         <variable
-            name="listFragmentViewModel"
+            name="viewModel"
             type="com.example.dontcallindrunk.list.ListFragmentViewModel" />
 <!--        <variable-->
 <!--            name="fragmentManager"-->
@@ -22,6 +22,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listRecyclerView"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:items="@{viewModel.items}"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
@@ -32,7 +34,7 @@
             android:layout_gravity="right|bottom"
             android:layout_marginRight="27dp"
             android:layout_marginBottom="27dp"
-            android:onClick="@{()->listFragmentViewModel.onClickAddListButton()}"
+            android:onClick="@{()->viewModel.onClickAddListButton()}"
             android:src="@drawable/color_plus_icon" />
 
     </FrameLayout>

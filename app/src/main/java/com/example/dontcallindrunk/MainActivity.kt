@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.room.Room
+import com.example.dontcallindrunk.data.WorkDatabase
 import com.example.dontcallindrunk.databinding.ActivityMainBinding
 import com.example.dontcallindrunk.list.ListFragment
 import com.example.dontcallindrunk.record.RecordFragment

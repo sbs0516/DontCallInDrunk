@@ -100,25 +100,25 @@
 
     </LinearLayout>
 
-    <TextView
+    <TimePicker
         android:id="@+id/timePicker"
         android:layout_width="250dp"
         android:layout_height="110dp"
-        android:text="TimePicker"
+        android:hour="@={viewModel.setWorkHour}"
+        android:minute="@={viewModel.setWorkMinute}"
         app:layout_constraintTop_toBottomOf="@id/secondLinearLayout"
         app:layout_constraintRight_toLeftOf="@id/timePickerTwo"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="15dp"
-        android:background="@color/gray" />
+        android:timePickerMode="spinner" />
 
-    <TextView
+    <Spinner
         android:id="@+id/timePickerTwo"
         android:layout_width="0dp"
         android:layout_height="110dp"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"
-        android:background="@color/gray"
-        android:text="TimePickerTwo"
+        android:spinnerMode="dialog"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/secondLinearLayout"
         app:layout_constraintLeft_toRightOf="@id/timePicker" />

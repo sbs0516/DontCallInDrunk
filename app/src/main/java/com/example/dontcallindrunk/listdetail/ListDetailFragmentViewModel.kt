@@ -28,6 +28,10 @@ class ListDetailFragmentViewModel: ViewModel() {
 
     val setWorkTime = ObservableField(Date(System.currentTimeMillis()))
 
+    val setWorkHour = ObservableInt()
+
+    val setWorkMinute = ObservableInt()
+
     val setEndTime = ObservableInt()
 
     val emergencyNumber = ObservableField<String>()
@@ -65,6 +69,8 @@ class ListDetailFragmentViewModel: ViewModel() {
                 blockNumberOne.set(selectWork.get()?.blockNumberOne)
                 blockNumberTwo.set(selectWork.get()?.blockNumberTwo)
 //        setWorkTime.value = work?.get()?.setWorkTime
+                selectWork.get()?.setWorkHour?.let { setWorkHour.set(it) }
+                selectWork.get()?.setWorkMinute?.let { setWorkMinute.set(it) }
                 selectWork.get()?.setEndTime?.let { setEndTime.set(it) }
                 emergencyNumber.set(selectWork.get()?.emergencyNumber)
                 selectWork.get()?.isLostFunActivated?.let { isLostFunActivated.set(it) }
@@ -79,6 +85,8 @@ class ListDetailFragmentViewModel: ViewModel() {
         val currentBlockOne = blockNumberOne.get()
         val currentBlockTwo = blockNumberTwo.get()
         val setWorkTime = setWorkTime.get()
+        val setWorkHour = setWorkHour.get()
+        val setWorkMinute = setWorkMinute.get()
         val setEndTime = setEndTime.get()
         val setEmergencyNum = emergencyNumber.get()
         val isActivated = isLostFunActivated.get()
@@ -87,6 +95,8 @@ class ListDetailFragmentViewModel: ViewModel() {
         selectWork.get()?.blockNumberOne = currentBlockOne
         selectWork.get()?.blockNumberTwo = currentBlockTwo
 //        selectWork.get()?.setWorkTime = setWorkTime
+        selectWork.get()?.setWorkHour = setWorkHour
+        selectWork.get()?.setWorkMinute = setWorkMinute
         selectWork.get()?.setEndTime = setEndTime
         selectWork.get()?.emergencyNumber = setEmergencyNum
         selectWork.get()?.isLostFunActivated = isActivated

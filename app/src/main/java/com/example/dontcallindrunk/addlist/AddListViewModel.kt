@@ -1,14 +1,16 @@
 package com.example.dontcallindrunk.addlist
 
+import android.app.TimePickerDialog
 import android.content.ContentValues.TAG
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
 import android.util.Log
-import androidx.databinding.BindingAdapter
-import androidx.databinding.ObservableBoolean
-import androidx.databinding.ObservableField
-import androidx.databinding.ObservableInt
+import android.view.View
+import android.widget.FrameLayout
+import android.widget.TimePicker
+import androidx.core.view.get
+import androidx.databinding.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,6 +23,7 @@ import com.example.dontcallindrunk.data.Work
 import com.example.dontcallindrunk.data.WorkDao
 import com.example.dontcallindrunk.list.ListRecyclerViewAdapter
 import java.lang.Exception
+import java.sql.Time
 import java.util.*
 import kotlin.concurrent.thread
 
@@ -34,7 +37,11 @@ class AddListViewModel: ViewModel() {
 
     val blockNumberTwo = MutableLiveData<String>()
 
-    val setWorkTime = MutableLiveData(Date(System.currentTimeMillis()))
+    val setWorkTime = ObservableField<Time>()
+
+    val setWorkHour = ObservableInt()
+
+    val setWorkMinute = ObservableInt()
 
     val setEndTime = MutableLiveData<Int>()
 
@@ -43,8 +50,6 @@ class AddListViewModel: ViewModel() {
     val isLostFunActivated = MutableLiveData<Boolean>()
 
     val work = ObservableField<Work>()
-
-    val selectWorkId = MutableLiveData<Int>()
 
     private val mainHandler = Handler(Looper.getMainLooper())
 
@@ -67,12 +72,17 @@ class AddListViewModel: ViewModel() {
         val currentTitle = title.value
         val currentBlockOne = blockNumberOne.value
         val currentBlockTwo = blockNumberTwo.value
-        val setWorkTime = setWorkTime.value
+        val setWorkTime = setWorkTime.get()
+        val setWorkHour = setWorkHour.get()
+        val setWorkMinute = setWorkMinute.get()
         val setEndTime = setEndTime.value
         val setEmergencyNum = emergencyNumber.value
         val isActivated = isLostFunActivated.value
 
-        val workObject = Work(currentTitle, currentBlockOne, currentBlockTwo, setWorkTime?.time, setEndTime, setEmergencyNum, isActivated)
+        Log.d("hour","$setWorkHour")
+        Log.d("minute","$setWorkMinute")
+
+        val workObject = Work(currentTitle, currentBlockOne, currentBlockTwo, setWorkHour, setWorkMinute, setEndTime, setEmergencyNum, isActivated)
         work.set(workObject)
 
         thread {

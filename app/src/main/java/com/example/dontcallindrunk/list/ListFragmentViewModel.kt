@@ -20,7 +20,7 @@ fun setItems(listView: RecyclerView, items: List<Work>?) {
     }
 }
 
-class ListFragmentViewModel: MainViewModel() {
+class ListFragmentViewModel: ViewModel() {
 
     lateinit var dao: WorkDao
 
@@ -44,9 +44,7 @@ class ListFragmentViewModel: MainViewModel() {
 
     fun onClickListItem(workId: Int) {
         Log.d("listDetail", "onClickListItem : ${workId}")
-        selectWorkId.value = workId
         tempWorkId.value = workId
-        Log.d("listDetail", "onClickListItem2 : ${selectWorkId.value}")
         Log.d("listDetail", "onClickListItem3 : ${tempWorkId.value}")
         clickListItemListener?.onClickListItem()
     }

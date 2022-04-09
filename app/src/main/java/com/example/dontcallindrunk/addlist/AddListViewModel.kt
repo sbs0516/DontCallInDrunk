@@ -24,9 +24,27 @@ import java.lang.Exception
 import java.util.*
 import kotlin.concurrent.thread
 
-class AddListViewModel: MainViewModel() {
+class AddListViewModel: ViewModel() {
 
     lateinit var dao: WorkDao
+
+    val title = MutableLiveData<String>()
+
+    val blockNumberOne = MutableLiveData<String>()
+
+    val blockNumberTwo = MutableLiveData<String>()
+
+    val setWorkTime = MutableLiveData(Date(System.currentTimeMillis()))
+
+    val setEndTime = MutableLiveData<Int>()
+
+    val emergencyNumber = MutableLiveData<String>()
+
+    val isLostFunActivated = MutableLiveData<Boolean>()
+
+    val work = ObservableField<Work>()
+
+    val selectWorkId = MutableLiveData<Int>()
 
     private val mainHandler = Handler(Looper.getMainLooper())
 

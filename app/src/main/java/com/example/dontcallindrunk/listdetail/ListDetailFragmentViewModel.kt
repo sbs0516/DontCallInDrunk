@@ -61,9 +61,9 @@ class ListDetailFragmentViewModel: ViewModel() {
         }
     }
 
-    fun setProperty() {
+    fun setProperty(check: String) {
 
-        Log.d(TAG, "setProperty: ${selectWork.get()}")
+        Log.d("$check", "setProperty: ${selectWork.get()}")
         title.set(selectWork.get()?.title)
         blockNumberOne.set(selectWork.get()?.blockNumberOne)
         blockNumberTwo.set(selectWork.get()?.blockNumberTwo)

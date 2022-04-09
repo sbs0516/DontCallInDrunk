@@ -1,5 +1,6 @@
 package com.example.dontcallindrunk.listdetail
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,15 +39,19 @@ class ListDetailFragment private constructor(): Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         listDetailBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_list_detail, container,false)
-        listDetailViewModel.initializeSelectedWork()
         return listDetailBinding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listDetailViewModel.initializeSelectedWork()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listDetailBinding.viewModel = listDetailViewModel
 
-        listDetailViewModel.setProperty()
+        listDetailViewModel.setProperty("onViewCreadted")
 
         listDetailViewModel.setOnClickSaveListener(object : OnClickSaveListener {
             override fun onClickSave() {
@@ -58,11 +63,11 @@ class ListDetailFragment private constructor(): Fragment() {
 
     override fun onResume() {
         super.onResume()
-        listDetailViewModel.setProperty()
+        listDetailViewModel.setProperty("onResume")
     }
 
     private fun finishFragment() {
         val fragmentManager = (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
-        fragmentManager.replace(R.id.mainFrameLayout, ListFragment.buildFragment()).commit()
+        fragmentManager.replace(R.id.mainFrameLayout, ListFragment.buildFragment()).remove(this).commit()
     }
 }

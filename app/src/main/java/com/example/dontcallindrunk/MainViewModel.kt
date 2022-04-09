@@ -60,21 +60,6 @@ open class MainViewModel: ViewModel() {
         const val VIEWSTATE_SETTING = 3
 
     }
-    val title = MutableLiveData<String>()
-
-    val blockNumberOne = MutableLiveData<String>()
-
-    val blockNumberTwo = MutableLiveData<String>()
-
-    val setWorkTime = MutableLiveData(Date(System.currentTimeMillis()))
-
-    val setEndTime = MutableLiveData<Int>()
-
-    val emergencyNumber = MutableLiveData<String>()
-
-    val isLostFunActivated = MutableLiveData<Boolean>()
-
-    val work = ObservableField<Work>()
 
     val selectWorkId = MutableLiveData<Int>()
 

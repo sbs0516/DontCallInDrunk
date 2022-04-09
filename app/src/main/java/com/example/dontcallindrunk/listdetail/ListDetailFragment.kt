@@ -1,4 +1,4 @@
-package com.example.dontcallindrunk.addlist
+package com.example.dontcallindrunk.listdetail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,25 +12,24 @@ import androidx.room.Room
 import com.example.dontcallindrunk.R
 import com.example.dontcallindrunk.`interface`.OnClickSaveListener
 import com.example.dontcallindrunk.data.WorkDatabase
-import com.example.dontcallindrunk.databinding.FragmentAddListBinding
+import com.example.dontcallindrunk.databinding.FragmentListDetailBinding
 import com.example.dontcallindrunk.list.ListFragment
 
-class AddListFragment private constructor(): Fragment() {
+class ListDetailFragment private constructor(): Fragment() {
 
     companion object {
+        lateinit var listDetailFragment: ListDetailFragment
 
-        lateinit var addListFragment: AddListFragment
-
-        fun buildFragment(): AddListFragment {
-            addListFragment = AddListFragment()
-            return addListFragment
+        fun buildFragment(): ListDetailFragment {
+            listDetailFragment = ListDetailFragment()
+            return listDetailFragment
         }
     }
 
-    lateinit var addListFragmentBinding: FragmentAddListBinding
+    lateinit var listDetailBinding: FragmentListDetailBinding
 
-    private val addListViewModel by lazy { ViewModelProviders.of(this).get(AddListViewModel::class.java).apply {
-        this.dao = Room.databaseBuilder(this@AddListFragment.requireContext(), WorkDatabase::class.java, "workDB").build().workDao()
+    private val listDetailViewModel by lazy { ViewModelProviders.of(this).get(ListDetailFragmentViewModel::class.java).apply {
+        this.dao = Room.databaseBuilder(this@ListDetailFragment.requireContext(), WorkDatabase::class.java, "workDB").build().workDao()
     } }
 
     override fun onCreateView(
@@ -38,21 +37,28 @@ class AddListFragment private constructor(): Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        addListFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_list, container, false)
-        return addListFragmentBinding.root
+        listDetailBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_list_detail, container,false)
+        listDetailViewModel.initializeSelectedWork()
+        return listDetailBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        listDetailBinding.viewModel = listDetailViewModel
 
-        addListFragmentBinding.viewModel = addListViewModel
+        listDetailViewModel.setProperty()
 
-        addListViewModel.setOnClickSaveListener(object : OnClickSaveListener {
+        listDetailViewModel.setOnClickSaveListener(object : OnClickSaveListener {
             override fun onClickSave() {
                 finishFragment()
             }
         })
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        listDetailViewModel.setProperty()
     }
 
     private fun finishFragment() {

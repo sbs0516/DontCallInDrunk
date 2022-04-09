@@ -25,6 +25,13 @@ class MainActivity : AppCompatActivity() {
 
         mainActivityBinding.fragmentManager = supportFragmentManager
 
+        viewModel.onResume()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.onResume()
     }
 
 }

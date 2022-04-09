@@ -6,9 +6,6 @@
         <variable
             name="viewModel"
             type="com.example.dontcallindrunk.list.ListFragmentViewModel" />
-<!--        <variable-->
-<!--            name="fragmentManager"-->
-<!--            type="androidx.fragment.app.FragmentManager" />-->
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

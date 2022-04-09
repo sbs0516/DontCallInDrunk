@@ -1,41 +1,54 @@
 package com.example.dontcallindrunk.list
 
 import android.util.Log
-import android.widget.FrameLayout
-import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.LiveData
+import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.room.Room
+import androidx.recyclerview.widget.RecyclerView
 import com.example.dontcallindrunk.MainViewModel
-import com.example.dontcallindrunk.R
 import com.example.dontcallindrunk.`interface`.OnClickAddListListener
-import com.example.dontcallindrunk.addlist.AddListFragment
+import com.example.dontcallindrunk.`interface`.OnClickListItemListener
 import com.example.dontcallindrunk.data.Work
 import com.example.dontcallindrunk.data.WorkDao
-import com.example.dontcallindrunk.record.RecordFragment
-import com.example.dontcallindrunk.setting.SettingFragment
+import kotlin.concurrent.thread
 
-//@BindingAdapter(value = ["fragmentManager"])
-//fun setOnFragmentListener(view: ImageView, fragmentManager: FragmentManager) {
-//
-//    val fragmentTransAction = fragmentManager.beginTransaction()
-//    fragmentTransAction.replace(R.id.mainFrameLayout, AddListFragment()).commit()
-//
-//}
+@BindingAdapter("app:items")
+fun setItems(listView: RecyclerView, items: List<Work>?) {
+    items?.let {
+        (listView.adapter as ListRecyclerViewAdapter).submitList(items)
+    }
+}
 
-class ListFragmentViewModel: ViewModel() {
+class ListFragmentViewModel: MainViewModel() {
 
     lateinit var dao: WorkDao
 
-    lateinit var items: LiveData<List<Work>>
+    var items = ObservableField<List<Work>>()
+
+    val tempWorkId = MutableLiveData<Int>()
 
     var clickAddListListener: OnClickAddListListener? = null
 
-    fun getWorksItem() {
-        items = dao.getWorks()
+    var clickListItemListener: OnClickListItemListener? = null
+
+    fun updateWorkList() {
+        thread {
+            items.set(dao.getWorkList())
+        }
+    }
+
+    fun setOnClickListItemListener(listener: OnClickListItemListener) {
+        this.clickListItemListener = listener
+    }
+
+    fun onClickListItem(workId: Int) {
+        Log.d("listDetail", "onClickListItem : ${workId}")
+        selectWorkId.value = workId
+        tempWorkId.value = workId
+        Log.d("listDetail", "onClickListItem2 : ${selectWorkId.value}")
+        Log.d("listDetail", "onClickListItem3 : ${tempWorkId.value}")
+        clickListItemListener?.onClickListItem()
     }
 
     fun setOnClickAddListListener(listener: OnClickAddListListener) {
@@ -45,6 +58,5 @@ class ListFragmentViewModel: ViewModel() {
     fun onClickAddListButton() {
         clickAddListListener?.onClickAddList()
     }
-
 
 }

@@ -5,23 +5,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
-import com.example.dontcallindrunk.MainActivity
 import com.example.dontcallindrunk.R
 import com.example.dontcallindrunk.`interface`.OnClickAddListListener
+import com.example.dontcallindrunk.`interface`.OnClickListItemListener
 import com.example.dontcallindrunk.addlist.AddListFragment
+import com.example.dontcallindrunk.data.Work
 import com.example.dontcallindrunk.data.WorkDatabase
 import com.example.dontcallindrunk.databinding.FragmentListBinding
+import com.example.dontcallindrunk.listdetail.ListDetailFragment
 
-class ListFragment: Fragment() {
+class ListFragment private constructor(): Fragment() {
 
-//    private val listFragmentBinding by lazy { DataBindingUtil.inflate<FragmentListBinding>(layoutInflater, R.layout.fragment_list,false) }
+    companion object {
+
+        lateinit var listFragment: ListFragment
+
+        fun buildFragment(): ListFragment {
+            listFragment = ListFragment()
+            return listFragment
+        }
+    }
+
     lateinit var listFragmentBinding: FragmentListBinding
 
     private val listFragmentViewModel by lazy { ViewModelProviders.of(this).get(ListFragmentViewModel::class.java).apply {
@@ -42,6 +52,8 @@ class ListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        listFragmentViewModel.updateWorkList()
+
         listFragmentBinding.viewModel = listFragmentViewModel
 
         listFragmentViewModel.setOnClickAddListListener(object : OnClickAddListListener {
@@ -50,19 +62,27 @@ class ListFragment: Fragment() {
             }
         })
 
+        listFragmentViewModel.setOnClickListItemListener(object : OnClickListItemListener {
+            override fun onClickListItem() {
+                goListDetailFragment()
+            }
+        })
         setUpListRecyclerAdapter()
-        listFragmentViewModel.getWorksItem()
-
     }
 
     override fun onResume() {
         super.onResume()
-        listFragmentViewModel.getWorksItem()
+        listFragmentViewModel.updateWorkList()
     }
 
     fun goAddListFragment() {
         val fragmentManager = (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
-        fragmentManager.replace(R.id.mainFrameLayout, AddListFragment()).addToBackStack("AddListFragment").commit()
+        fragmentManager.replace(R.id.mainFrameLayout, AddListFragment.buildFragment()).addToBackStack("AddListFragment").commit()
+    }
+
+    fun goListDetailFragment() {
+        val fragmentManager = (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
+        fragmentManager.replace(R.id.mainFrameLayout, ListDetailFragment.buildFragment()).addToBackStack("AddListFragment").commit()
     }
 
     private fun setUpListRecyclerAdapter() {

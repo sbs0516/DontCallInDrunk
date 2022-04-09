@@ -14,6 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dontcallindrunk.Event
+import com.example.dontcallindrunk.MainViewModel
 import com.example.dontcallindrunk.`interface`.OnClickAddListListener
 import com.example.dontcallindrunk.`interface`.OnClickSaveListener
 import com.example.dontcallindrunk.data.Work
@@ -21,42 +22,11 @@ import com.example.dontcallindrunk.data.WorkDao
 import com.example.dontcallindrunk.list.ListRecyclerViewAdapter
 import java.lang.Exception
 import java.util.*
+import kotlin.concurrent.thread
 
-@BindingAdapter("app:items")
-fun setItems(listView: RecyclerView, items: List<Work>?) {
-    Log.d(TAG, "setItems: setItem ${items?.size}")
-    items?.let {
-        (listView.adapter as ListRecyclerViewAdapter).submitList(items)
-    }
-}
-
-class AddListViewModel: ViewModel() {
+class AddListViewModel: MainViewModel() {
 
     lateinit var dao: WorkDao
-
-    val title = MutableLiveData<String>()
-
-    val blockNumberOne = MutableLiveData<String>()
-
-    val blockNumberTwo = MutableLiveData<String>()
-
-    val setWorkTime = MutableLiveData(Date(System.currentTimeMillis()))
-
-    val setEndTime = MutableLiveData<Int>()
-
-    val emergencyNumber = MutableLiveData<String>()
-
-    val isLostFunActivated = MutableLiveData<Boolean>()
-
-    val work = ObservableField<Work>()
-
-    private val handlerThread = HandlerThread("HandlerThread")
-
-    init {
-        handlerThread.start()
-    }
-
-    private val handler = Handler(handlerThread.looper)
 
     private val mainHandler = Handler(Looper.getMainLooper())
 
@@ -87,20 +57,15 @@ class AddListViewModel: ViewModel() {
         val workObject = Work(currentTitle, currentBlockOne, currentBlockTwo, setWorkTime?.time, setEndTime, setEmergencyNum, isActivated)
         work.set(workObject)
 
-        handler.post {
-            insertWork(workObject)
-        }
-        handlerThread.quit()
-
-        onClickSave()
-
-    }
-
-    private fun insertWork(work: Work) {
-        try{
-            dao.insertWorks(work)
-        } catch (e: Exception) {
-            Log.e(TAG, "insertWork: 24124 $e  ", e)
+        thread {
+            Log.d(TAG, "saveWork: 1")
+            try {
+                dao.insertWorks(workObject)
+            } catch (e: Exception) {
+                Log.e(TAG, "saveWork: $e", e)
+            }
+            Log.d(TAG, "saveWork: 2")
+            onClickSave()
         }
 
     }

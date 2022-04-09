@@ -1,5 +1,6 @@
 package com.example.dontcallindrunk.data
 
+import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import java.util.*
@@ -16,8 +17,9 @@ interface WorkDao {
     fun updateWorks(works: Work)
 
     @Query("SELECT * FROM works")
-    fun getWorks(): LiveData<List<Work>>
+    fun getWorkList(): List<Work>
 
-//    @Query("SELECT block_number_one FROM works")
-//    fun getBlockNumberOne(): String
+    @Query("SELECT * FROM works WHERE id = :workId")
+    fun getWork(workId: Int?): Work
+
 }

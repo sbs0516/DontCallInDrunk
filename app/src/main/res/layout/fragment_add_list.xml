@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@{viewModel.title}"
+        android:text="@={viewModel.title}"
         android:hint="제목"
         android:textSize="18dp"/>
 
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            android:text="@{viewModel.blockNumberOne}"
+            android:text="@={viewModel.blockNumberOne}"
             android:inputType="phone"
             android:hint="연락처를 입력하세요" />
 
@@ -89,7 +89,7 @@
             android:layout_weight="0.2"
             android:hint="연락처를 입력하세요"
             android:inputType="phone"
-            android:text="@{viewModel.blockNumberTwo}" />
+            android:text="@={viewModel.blockNumberTwo}" />
 
         <ImageView
             android:layout_width="40dp"
@@ -154,7 +154,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            android:text="@{viewModel.emergencyNumber}"
+            android:text="@={viewModel.emergencyNumber}"
             android:inputType="phone"
             android:hint="연락처를 입력하세요" />
 
@@ -189,7 +189,7 @@
         <CheckBox
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:checked="@{viewModel.isLostFunActivated()}"/>
+            android:checked="@={viewModel.isLostFunActivated}"/>
 
     </LinearLayout>
 

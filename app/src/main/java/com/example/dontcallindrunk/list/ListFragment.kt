@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProviders
 import androidx.room.Room
 import com.example.dontcallindrunk.R
@@ -64,6 +65,8 @@ class ListFragment private constructor(): Fragment() {
 
         listFragmentViewModel.setOnClickListItemListener(object : OnClickListItemListener {
             override fun onClickListItem() {
+                val selectedWorkId = listFragmentViewModel.selectedWorkId.get()
+                setFragmentResult("requestKey", bundleOf("bundleKey" to selectedWorkId))
                 goListDetailFragment()
             }
         })

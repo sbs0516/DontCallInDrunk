@@ -1,28 +1,17 @@
 package com.example.dontcallindrunk
 
 import android.util.Log
-import android.view.View
 import android.widget.FrameLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.Bindable
 import androidx.databinding.BindingAdapter
-import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.dontcallindrunk.data.Work
 import com.example.dontcallindrunk.list.ListFragment
 import com.example.dontcallindrunk.list.ListFragmentViewModel
-import com.example.dontcallindrunk.listdetail.ListDetailFragmentViewModel
 import com.example.dontcallindrunk.record.RecordFragment
 import com.example.dontcallindrunk.setting.SettingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import org.jetbrains.annotations.Contract
-import java.lang.IllegalArgumentException
-import java.util.*
 
 interface OnMenuClickListener {
     fun onMenuClicked(itemId: Int)
@@ -66,8 +55,7 @@ open class MainViewModel: ViewModel() {
     var viewState = ObservableInt(VIEWSTATE_DEFAULT)
 
     fun onResume() {
-        Log.d("listDetail", "mainViewModel : ${ListFragmentViewModel().tempWorkId.value}")
-        selectWorkId.value = ListFragmentViewModel().tempWorkId.value
+        selectWorkId.value = ListFragmentViewModel().selectedWorkId.get()
     }
 
     fun onNavigationItemSelected(itemId: Int) {

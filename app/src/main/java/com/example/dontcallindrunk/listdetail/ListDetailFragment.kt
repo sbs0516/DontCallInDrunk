@@ -2,12 +2,15 @@ package com.example.dontcallindrunk.listdetail
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableInt
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProviders
 import androidx.room.Room
 import com.example.dontcallindrunk.R
@@ -15,6 +18,7 @@ import com.example.dontcallindrunk.`interface`.OnClickSaveListener
 import com.example.dontcallindrunk.data.WorkDatabase
 import com.example.dontcallindrunk.databinding.FragmentListDetailBinding
 import com.example.dontcallindrunk.list.ListFragment
+import kotlin.properties.Delegates
 
 class ListDetailFragment private constructor(): Fragment() {
 
@@ -29,6 +33,8 @@ class ListDetailFragment private constructor(): Fragment() {
 
     lateinit var listDetailBinding: FragmentListDetailBinding
 
+    val result = ObservableInt()
+
     private val listDetailViewModel by lazy { ViewModelProviders.of(this).get(ListDetailFragmentViewModel::class.java).apply {
         this.dao = Room.databaseBuilder(this@ListDetailFragment.requireContext(), WorkDatabase::class.java, "workDB").build().workDao()
     } }
@@ -42,16 +48,11 @@ class ListDetailFragment private constructor(): Fragment() {
         return listDetailBinding.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listDetailViewModel.initializeSelectedWork()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listDetailBinding.viewModel = listDetailViewModel
 
-        listDetailViewModel.setProperty("onViewCreadted")
+        setBundle()
 
         listDetailViewModel.setOnClickSaveListener(object : OnClickSaveListener {
             override fun onClickSave() {
@@ -63,7 +64,15 @@ class ListDetailFragment private constructor(): Fragment() {
 
     override fun onResume() {
         super.onResume()
-        listDetailViewModel.setProperty("onResume")
+        setBundle()
+    }
+
+    private fun setBundle() {
+        setFragmentResultListener("requestKey") { resultKey, bundle ->
+            result.set(bundle.getInt("bundleKey"))
+            Log.d("result", "${result.get()}")
+            listDetailViewModel.initializeSelectedWork(result.get())
+        }
     }
 
     private fun finishFragment() {

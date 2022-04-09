@@ -20,6 +20,6 @@ interface WorkDao {
     fun getWorkList(): List<Work>
 
     @Query("SELECT * FROM works WHERE id = :workId")
-    fun getWork(workId: Int?): Work
+    fun getWork(workId: Int): Work
 
 }

@@ -3,13 +3,11 @@ package com.example.dontcallindrunk.listdetail
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.os.Handler
-import android.os.HandlerThread
 import android.os.Looper
 import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import androidx.databinding.ObservableShort
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.dontcallindrunk.`interface`.OnClickSaveListener
@@ -54,23 +52,24 @@ class ListDetailFragmentViewModel: ViewModel() {
         }
     }
 
-    fun initializeSelectedWork() {
+    fun initializeSelectedWork(id: Int) {
         thread {
-            Log.d(TAG, "initializeProperty: ${dao.getWork(6)}")
-            selectWork.set(dao.getWork(6))
-        }
-    }
+            Log.d("initialize", "id: $id")
+            Log.d("initialize", "getWork: ${dao.getWork(id)}")
+            selectWork.set(dao.getWork(id))
 
-    fun setProperty(check: String) {
+            mainHandler.post {
+                Log.d(TAG, "initializeProperty: ${selectWork.get()?.title}")
 
-        Log.d("$check", "setProperty: ${selectWork.get()}")
-        title.set(selectWork.get()?.title)
-        blockNumberOne.set(selectWork.get()?.blockNumberOne)
-        blockNumberTwo.set(selectWork.get()?.blockNumberTwo)
+                title.set(selectWork.get()?.title)
+                blockNumberOne.set(selectWork.get()?.blockNumberOne)
+                blockNumberTwo.set(selectWork.get()?.blockNumberTwo)
 //        setWorkTime.value = work?.get()?.setWorkTime
-        selectWork.get()?.setEndTime?.let { setEndTime.set(it) }
-        emergencyNumber.set(selectWork.get()?.emergencyNumber)
-        selectWork.get()?.isLostFunActivated?.let { isLostFunActivated.set(it) }
+                selectWork.get()?.setEndTime?.let { setEndTime.set(it) }
+                emergencyNumber.set(selectWork.get()?.emergencyNumber)
+                selectWork.get()?.isLostFunActivated?.let { isLostFunActivated.set(it) }
+            }
+        }
 
     }
 

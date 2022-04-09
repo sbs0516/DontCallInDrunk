@@ -3,10 +3,10 @@ package com.example.dontcallindrunk.list
 import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dontcallindrunk.MainViewModel
 import com.example.dontcallindrunk.`interface`.OnClickAddListListener
 import com.example.dontcallindrunk.`interface`.OnClickListItemListener
 import com.example.dontcallindrunk.data.Work
@@ -26,7 +26,7 @@ class ListFragmentViewModel: ViewModel() {
 
     var items = ObservableField<List<Work>>()
 
-    val tempWorkId = MutableLiveData<Int>()
+    val selectedWorkId = ObservableInt()
 
     var clickAddListListener: OnClickAddListListener? = null
 
@@ -43,9 +43,9 @@ class ListFragmentViewModel: ViewModel() {
     }
 
     fun onClickListItem(workId: Int) {
-        Log.d("listDetail", "onClickListItem : ${workId}")
-        tempWorkId.value = workId
-        Log.d("listDetail", "onClickListItem3 : ${tempWorkId.value}")
+        Log.d("listFragVM", "onClickListItem : ${workId}")
+        selectedWorkId.set(workId)
+        Log.d("listFragVM", "onClickListItem2 : ${selectedWorkId.get()}")
         clickListItemListener?.onClickListItem()
     }
 

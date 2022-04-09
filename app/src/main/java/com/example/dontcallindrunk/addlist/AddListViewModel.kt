@@ -1,31 +1,67 @@
 package com.example.dontcallindrunk.addlist
 
-import android.app.TimePickerDialog
 import android.content.ContentValues.TAG
 import android.os.Handler
-import android.os.HandlerThread
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.TimePicker
-import androidx.core.view.get
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.databinding.*
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.RecyclerView
-import com.example.dontcallindrunk.Event
-import com.example.dontcallindrunk.MainViewModel
-import com.example.dontcallindrunk.`interface`.OnClickAddListListener
+import com.example.dontcallindrunk.R
 import com.example.dontcallindrunk.`interface`.OnClickSaveListener
 import com.example.dontcallindrunk.data.Work
 import com.example.dontcallindrunk.data.WorkDao
-import com.example.dontcallindrunk.list.ListRecyclerViewAdapter
-import java.lang.Exception
 import java.sql.Time
-import java.util.*
 import kotlin.concurrent.thread
+
+@BindingAdapter("entries")
+fun Spinner.setEntries(entries: List<String>?) {
+    entries?.run {
+        val arrayAdapter = ArrayAdapter(AddListFragment.buildFragment().requireContext(), R.layout.spinner_item, entries)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter = arrayAdapter
+    }
+}
+
+@InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
+fun Spinner.getSelectedValue(): Any? {
+    return selectedItem
+}
+
+@BindingAdapter("selectedValueAttrChanged")
+fun Spinner.setInverseBindingListener(inverseBindingListener: InverseBindingListener?) {
+
+    inverseBindingListener?.run {
+        onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                if (tag != position) {
+                    inverseBindingListener.onChange()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+}
+
+@BindingAdapter("selectedValue")
+fun Spinner.setSelectedValue(selectedValue: Any?) {
+    adapter?.run {
+        val position =
+            (adapter as ArrayAdapter<Any>).getPosition(selectedValue)
+        setSelection(position, false)
+        tag = position
+    }
+}
 
 class AddListViewModel: ViewModel() {
 
@@ -43,13 +79,15 @@ class AddListViewModel: ViewModel() {
 
     val setWorkMinute = ObservableInt()
 
-    val setEndTime = MutableLiveData<Int>()
+    val setEndTime = ObservableInt()
 
     val emergencyNumber = MutableLiveData<String>()
 
     val isLostFunActivated = MutableLiveData<Boolean>()
 
     val work = ObservableField<Work>()
+
+    val spinnerItem = listOf("0시간","1시간","2시간","3시간","4시간","5시간","6시간","7시간","8시간","9시간","10시간","11시간","12시간")
 
     private val mainHandler = Handler(Looper.getMainLooper())
 
@@ -75,7 +113,7 @@ class AddListViewModel: ViewModel() {
         val setWorkTime = setWorkTime.get()
         val setWorkHour = setWorkHour.get()
         val setWorkMinute = setWorkMinute.get()
-        val setEndTime = setEndTime.value
+        val setEndTime = setEndTime.get()
         val setEmergencyNum = emergencyNumber.value
         val isActivated = isLostFunActivated.value
 

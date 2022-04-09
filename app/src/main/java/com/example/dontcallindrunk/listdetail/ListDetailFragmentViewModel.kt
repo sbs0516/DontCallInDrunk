@@ -42,6 +42,8 @@ class ListDetailFragmentViewModel: ViewModel() {
 
     var selectWork = ObservableField<Work>()
 
+    val spinnerItem = listOf("0시간","1시간","2시간","3시간","4시간","5시간","6시간","7시간","8시간","9시간","10시간","11시간","12시간")
+
     private val mainHandler = Handler(Looper.getMainLooper())
 
     private var saveListener: OnClickSaveListener? = null

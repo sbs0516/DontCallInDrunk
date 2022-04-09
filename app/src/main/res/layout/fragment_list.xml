@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.dontcallindrunk.list.ListFragmentViewModel" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listRecyclerView"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:items="@{viewModel.items}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/addListButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="27dp"
+            android:layout_marginBottom="27dp"
+            android:onClick="@{()->viewModel.onClickAddListButton()}"
+            android:src="@drawable/color_plus_icon" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

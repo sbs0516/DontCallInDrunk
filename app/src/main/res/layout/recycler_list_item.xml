@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.dontcallindrunk.list.ListFragmentViewModel" />
+
+        <variable
+            name="work"
+            type="com.example.dontcallindrunk.data.Work" />
+    </data>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:padding="10dp"
+    android:orientation="horizontal"
+    android:onClick="@{()->viewModel.onClickListItem(work.id)}">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.35"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/titleTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="28sp"
+            android:text="@{work.titleForWork}" />
+
+        <TextView
+            android:id="@+id/workTimeTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:paddingTop="5dp"
+            android:text="@{work.workTimeForWork}" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.65"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/dateTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:textSize="18sp"
+            android:text="2월 17일 (목)" />
+
+    </LinearLayout>
+
+</LinearLayout>
+</layout>
